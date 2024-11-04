@@ -1,4 +1,3 @@
-
 import requests
 import re
 
@@ -32,9 +31,9 @@ def get_images_from_source(source, num):
     return urls
 
 def get_external_source_urls(source, num):
-    srcs = re.search(r'<h2 id="Przypisy">.*', source, re.DOTALL | re.MULTILINE)
+    srcs = re.search(r'<h2 id="Przypisy">(.*)<h2 id="Linki_zewnętrzne">', source, re.DOTALL | re.MULTILINE)
     if srcs is not None:
-        srcs = srcs.group()
+        srcs = srcs.group(1)
     else: return []
 
     regexp = r'class="external text".*?href="(.*?)">'
@@ -69,6 +68,7 @@ def print_info_from_article(article_src):
     print(" | ".join(img_urls))
     print(" | ".join(exts))
     print(" | ".join(cats))
+
 
 category = input().strip()
 url = f"https://pl.wikipedia.org/wiki/Kategoria:{category}"
